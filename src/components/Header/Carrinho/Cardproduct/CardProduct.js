@@ -46,23 +46,26 @@ export const Product = styled.div`
             color: green;
           }
 
-          & .counter{
+          & .props.amounter{
             width: 100%;
             display: flex;
             gap: 10px;
 
-            & a{
+            & .btn{
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
                 font-weight: bold;
                 font-size: 1.3rem;
-                background-color: black;
+                background-color: red;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                color: white;
+                color: red;
 
+                & span{
+                  font-size: 1.3rem;
+                }
                   &:hover{
                     background-color: black;
                   }
@@ -89,24 +92,43 @@ export const Product = styled.div`
 `;
 
 const CardProduct = (props) => {
-  const [count, setCount] = useState(1);
 
+const incremento = (id) => {
+  const newProduct = props.cart.find((item) => item.id === id);
+    const newCart = props.cart.map((item) => {
+      if (item.id === id) {
+        return { ...newProduct, amount: newProduct.amount + 1 };
+      } else {
+        return item;
+      }
+    });
+    props.setCart(newCart);
+    localStorage.setItem("cart", JSON.stringify(props.cart))
+}
 
-  const incremento = () => {
-    let somar = count + 1;
-    
-    setCount(somar);
+const decremento = (id) => {
+  const produto = props.cart.find((item) => item.id === id);
+
+  if (produto.amount > 1) {
+    const newCart = props.cart.map((item) => {
+      if (item.id === id) {
+        return { ...produto, amount: produto.amount - 1 };
+      } else {
+        return item;
+      }
+    });
+
+    props.setCart(newCart);
+  } else {
+    const novoCarro = props.cart.filter((item) => item.id !== id);
+    props.setCart(novoCarro);
   }
-
-  const decremento = () => {
-    let diminuir = count >= 1 ? count - 1 : 1;
-    setCount(diminuir)
-  }
-
+}
 
   const excluirItem = () => {
     const novoValor = props.cart.filter(item => item.titulo !== props.titulo);
     props.setCart(novoValor);
+    localStorage.setItem("cart", JSON.stringify(props.cart))
   }
 
 
@@ -119,11 +141,11 @@ const CardProduct = (props) => {
       <div className="content">
         <h3>{props.titulo}</h3>
         <p>{props.description}</p>
-        <span>$ {count > 0 ? props.price * count : props.price || count === 0 ? 0 : props.price}</span>
-        <div className="counter">
-          <a onClick={decremento}> - </a>
-          <span>{count}</span>
-          <a onClick={incremento}> + </a>
+        <span>$ {props.amount * props.price}</span>
+        <div className="props.amounter">
+          <a className="btn" onClick={() => decremento(props.id)}> - </a>
+          <span>{props.amount}</span>
+          <a className="btn" onClick={() => incremento(props.id)}> + </a>
         </div>
       </div>
 

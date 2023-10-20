@@ -69,6 +69,10 @@ return (
     <FiltroDiv>
         <h2 className="text-center">Filtros:</h2><br/>
         <form>
+        <label htmlFor="nome">
+        <div>Buscar:</div>
+        <input type="search" name="nome" id="nome" onChange={(e) => props.setNome(e.target.value)} value={props.nome} placeholder="Digite o nome do produto"/>
+        </label>
             <label htmlFor="minPreco">
                 <div>Preço minimo:</div>
                 <input value={props.minFilter} onChange={(e) => props.setMinFilter(e.target.value)} type="number" name="minPreco" id="minPreco" placeholder="Digite o valor minimo"/>
@@ -80,10 +84,19 @@ return (
             </label>
         </form>
 
-        <select value={props.valor} onChange={(e) => props.setValor(e.target.value)} >
+    <div>
+    <select value={props.valor} onChange={(e) => props.setValor(e.target.value)} >
             <option  value="">Selecione por categoria</option>
             {props.lista}
         </select>
+
+        <select value={props.sorte} onChange={(e) => props.setSorte(e.target.value)} >
+            <option  value="">Filtro crescente e decrescente </option>
+            <option value="maior">Crescente </option>
+            <option value="menor">Decrescente </option>
+            
+        </select>
+    </div>
     </FiltroDiv>
 );
 }

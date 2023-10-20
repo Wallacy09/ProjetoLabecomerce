@@ -33,8 +33,10 @@ export const Produto = (props) => {
     const [valor, setValor] = useState(""); 
     const [minFilter, setMinFilter] = useState();
     const [maxFilter, setMaxFilter] = useState();
+    const [sorte, setSorte] = useState();
+    const [nome, setNome] = useState("");
 
-    console.log(valor);
+    console.log(nome);
 
     const optSelect = FakeApi.map(item => <option key={item.id}>{item.categoria}</option>)
 
@@ -52,11 +54,30 @@ export const Produto = (props) => {
                 setMinFilter={setMinFilter}
                 maxFilter={maxFilter}
                 setMaxFilter={setMaxFilter}
-
+                sorte={sorte}
+                setSorte={setSorte}
+                nome={nome}
+                setNome={setNome}
                     
                     />
                 <div className="containerProd">
-                    {FakeApi.filter((item) => {
+                    {FakeApi 
+                    .filter((item) => item.titulo.toLowerCase().includes(nome.toLowerCase()))
+                    .filter((item) => {
+                        if(maxFilter > 0 ){
+                            return item.preco <= maxFilter
+                        }else{
+                            return item
+                        }
+                    })
+                    .filter((item) => {
+                        if(minFilter > 0 ){
+                            return item.preco <= minFilter
+                        }else{
+                            return item
+                        }
+                    })
+                    .filter((item) => {
                         if(minFilter > 0 && maxFilter > 0){
                             return item.preco >= minFilter && item.preco <= maxFilter 
                         }else{
@@ -68,6 +89,15 @@ export const Produto = (props) => {
                             return item.categoria === valor
                         }else{
                             return item
+                        }
+                    })
+                    .sort(() => {
+                        if(sorte === "maior"){
+                            return 1
+                        }else if(sorte === "menor"){
+                            return -1
+                        }else {
+                            return 0
                         }
                     })
                     .map((item) => (
@@ -83,7 +113,8 @@ export const Produto = (props) => {
                         objeto={item}
                         setCart={props.setCart}
                         cart={props.cart}
-                        id={item.id}        
+                        id={item.id}
+                        produto={item}        
                         />
                     ))}
                 </div>

@@ -139,15 +139,22 @@ export const Prod = styled.div`
 
 export const CardProduto = (props) => {
 
-  const addCart = () => {
-    let order = props.cart
-    .filter(item => item !== props.objeto)
-    .sort(()=>{
-      return 0
-    })
-    props.setCart([...order, props.objeto]);
-  } 
-
+  function addCarrinho() {
+    const newProduct = props.cart.find(item => item.id === props.produto.id);
+    if(newProduct === undefined){
+      props.setCart([...props.cart, {...props.produto, amount: 1}])
+      console.log(props.cart);
+    }else{
+      const newCart = props.cart.map((item) => {
+        if(item.id === props.produto.id){
+          return {...newProduct, amount: newProduct.amount + 1}
+        }else{
+          return item
+        }
+      })
+      props.setCart(newCart);
+    }
+  }
   return (
     <Prod>
       <div className="imagemP">
@@ -162,7 +169,7 @@ export const CardProduto = (props) => {
           <span>$ {props.desconto}</span> $ {props.price}
         </h3>
         <button>Comprar</button>
-        <a href="#!" onClick={addCart}>
+        <a href="#!" onClick={addCarrinho}>
           <img src={car} alt="Carrinho" />
         </a>
       </div>

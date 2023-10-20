@@ -167,7 +167,9 @@ const Carrinho = ({ cart, setCart }) => {
     setAbreCarro(!abreCarro);
   };
 
-  const totalCart = cart.reduce((acumulador, item) => (item.preco * item.quantidade) + acumulador, 0);
+
+  const totalCart = cart.reduce((acumulador, item) => (item.preco * item.amount) + acumulador, 0);
+  console.log(cart);
 
   let lista = cart.map((item) => (
     <li key={item.id}>
@@ -176,8 +178,11 @@ const Carrinho = ({ cart, setCart }) => {
         image={item.image}
         description={item.descricao}
         price={item.preco}
+        quantidade={item.amount}
         setCart={setCart}
         cart={cart}
+        id={item.id}
+        amount={item.amount}
       />
     </li>
   ));
@@ -190,7 +195,7 @@ const Carrinho = ({ cart, setCart }) => {
 
       <ContainerCarrinho className={abreCarro && "active"}>
         <ul>{lista}</ul> 
-        <h4>Total: {totalCart} </h4>
+        <h4>Total: {totalCart}</h4>
         <button>Prosseguir para a compra</button>
       </ContainerCarrinho>
     </>

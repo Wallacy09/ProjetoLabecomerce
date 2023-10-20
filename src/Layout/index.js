@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { Header } from "../components/Header/Header";
 import { Main } from "../components/Main/Main";
 const Default = () => {
-    localStorage.getItem('cart') !== null ? "" : localStorage.setItem('cart', JSON.stringify([]));
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
     
   useEffect(() => {
     if(cart.length > 0){
@@ -12,10 +11,6 @@ const Default = () => {
     }
   }, [cart]);
 
-  useEffect(() => {
-    const local = localStorage.getItem('cart');
-    setCart(JSON.parse(local));
-  }, []);
 
     return (
         <>     
