@@ -5,7 +5,7 @@ export const FiltroDiv = styled.div`
     height: 100;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 49px;
     background: linear-gradient(to right, #e2b700, #980098 );
 
         form{
@@ -74,19 +74,19 @@ return (
         <input type="search" name="nome" id="nome" onChange={(e) => props.setNome(e.target.value)} value={props.nome} placeholder="Digite o nome do produto"/>
         </label>
             <label htmlFor="minPreco">
-                <div>Preço minimo:</div>
+                <div>Preço mínimo:</div>
                 <input value={props.minFilter} onChange={(e) => props.setMinFilter(e.target.value)} type="number" name="minPreco" id="minPreco" placeholder="Digite o valor minimo"/>
             </label>
 
             <label htmlFor="maxPreco">
-                <div>Preço maximo:</div>
+                <div>Preço máximo:</div>
                 <input value={props.maxFilter} onChange={(e) => props.setMaxFilter(e.target.value)} type="number" name="maxPreco" id="maxPreco" placeholder="Digite o valor maximo"/>
             </label>
         </form>
 
     <div>
     <select value={props.valor} onChange={(e) => props.setValor(e.target.value)} >
-            <option  value="">Selecione por categoria</option>
+            <option value="">Selecione por categoria</option>
             {props.lista}
         </select>
 
